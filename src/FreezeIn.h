@@ -12,6 +12,7 @@
 #include <string>/*to use string data type*/
 #include <cmath>/*provides pow, sqrt, ...*/
 #include <vector>/*provides std::vector*/
+#include <unistd.h>/*provides getcwd*/
 
 //Boost C++ library
 #include <boost/math/special_functions/bessel.hpp>/*provides bessel-K function*/
@@ -59,13 +60,16 @@ const long double cW = sqrt(1.0L - sW2); /*Cos(ThetaW)*/
 const long double tW = sqrt(sW2/(1.0L - sW2)); /*Tan(ThetaW)*/
 const long double s2W = 2.0L*sqrt(sW2 - sW2*sW2); /*Sin(2 ThetaW)*/
 
+//Conversions
+#define GeVinvtocm 1.97326937e-14 /*Inverse GeV in cm*/
+
 /*****************************************************************************/
 /* Useful fuctions: linear interpolation, finite-difference derivatives, etc.*/
 /*****************************************************************************/
 
 //Linear interpolation function
 long double interp(long double x, const vector<long double> &xData,
-                   const vector<long double> &yData, bool extrapolate) {
+              const vector<long double> &yData, bool extrapolate) {
 
     //Check if x is increasing/decreasing
     bool increasing = xData[1] > xData[0];
@@ -103,7 +107,7 @@ long double interp(long double x, const vector<long double> &xData,
 
 //Array of slopes using Finite-difference formulas
 vector<long double> slopearray(const vector<long double>& xData,
-                               const vector<long double>& yData) {
+                          const vector<long double>& yData) {
 
     long double x, y, x1, y1, x2, y2;
     vector<long double> dydxData;
@@ -162,7 +166,7 @@ vector<long double> dlngstarSdlnTvec;
 
 //Read gstar(S) data from various .tab files in the gstar folder, and compute
 //their finite-difference derivatives as a function of T
-void Read_gstar(const string& choice) {
+void Read_gstar(const string& choice, const string& gstarpath) {
     
     long double r1, r2, r3;
     vector <long double> tempvec;
@@ -182,6 +186,9 @@ void Read_gstar(const string& choice) {
     else if (choice == "HP_B2") { filename = "gstar/HP_B2.tab"; }
     else if (choice == "HP_B3") { filename = "gstar/HP_B3.tab"; }
     else if (choice == "HP_C") { filename = "gstar/HP_C.tab"; }
+
+    //prepend the path to the gstar folder to the filename
+    filename = gstarpath + "/" + filename;
 
     ifstream file(filename);
     //If a file is open, read line-by-line to extract three values (r1, r2, r3)
@@ -244,7 +251,7 @@ long double RhoVisible(long double T) {
 }
 
 //Comoving entropy of the Visible sector
-long double sVisibleEntropy(long double T) {
+long double EntropyVisible(long double T) {
     return (2.0L*M_PI*M_PI/45.0L)*gstarS(T)*T*T*T;
 }
 
@@ -264,7 +271,7 @@ long double HoverHbar(long double T) {
 
 //Fully averaged matrix element squared for f f -> Aprime/Z -> chi chi
 long double M2_ffchichi(long double s, long double mchi, long double mf,
-                        long double kappa, int Nf, long double Qf,
+                        long double kappa, long double Nf, long double Qf,
                         long double T3f) {
 
     //Vector (Vf) and Axial (Af) pieces of Z-f-f couplings in the SM
@@ -288,8 +295,8 @@ long double M2_ffchichi(long double s, long double mchi, long double mf,
 }
 
 //Fully averaged matrix element squared for phi+ phi- -> Aprime -> chi chi
-long double M2_sschichi(long double s, long double mchi,
-                        long double mcs, long double kappa) {
+long double M2_sschichi(long double s, long double mchi, long double mcs,
+                        long double kappa) {
 
     return (32.0L/3.0L)*M_PI*M_PI*alphaEM*alphaEM*kappa*kappa*(
             (1.0L - 4.0L*mcs*mcs/s)*(1.0L + 2.0L*mchi*mchi/s)
@@ -308,74 +315,111 @@ long double M2_WWchichi(long double s, long double mchi, long double kappa) {
             );
 }
 
+/****************************************/
 /* Collision terms for number densities */
+/****************************************/
 
-//Collision term for number density for f f -> Aprime/Z -> Chi Chi
-long double CollisionNum_ffchichi(long double T, long double mchi, long double mf, long double kappa, long double Nf, long double Qf, long double T3f, long double TQCD) {
+//Number-density collision term for f f -> Aprime/Z -> Chi Chi
+long double CollisionNum_ffchichi(long double T, long double mchi,
+                                  long double mf, long double kappa,
+                                  long double Nf, long double Qf,
+                                  long double T3f, long double TQCD) {
 
     if ( ( Nf == 1.0L ) || ( (Nf == 3.0L) && (T > TQCD) ) ) {
 
         auto integrand_s = [=] (long double s) {
-            return M2_ffchichi(s, mchi, mf, kappa, Nf, Qf, T3f)*sqrt(1.0L - 4.0L*mchi*mchi/s)*sqrt(1.0L - 4.0L*mf*mf/s)*sqrt(s)*boost::math::cyl_bessel_k(1, sqrt(s)/T);
+            return M2_ffchichi(s, mchi, mf, kappa, Nf, Qf, T3f) *
+                   sqrt(1.0L - 4.0L*mchi*mchi/s) *
+                   sqrt(1.0L - 4.0L*mf*mf/s) *
+                   sqrt(s) *
+                   boost::math::cyl_bessel_k(1, sqrt(s)/T);
         };
         
-        return (16.0L*T/pow(4.0L*M_PI, 5.0L))*exp_sinh<long double>().integrate(integrand_s, std::max(4.0L*mf*mf, 4.0L*mchi*mchi), INFINITY);
+        return (16.0L*T/pow(4.0L*M_PI, 5.0L)) *
+               exp_sinh<long double>().integrate(integrand_s,
+                                            max(4.0L*mf*mf, 4.0L*mchi*mchi),
+                                            INFINITY);
     }
     else { return 0.0L; }
 }
 
-//Collision term for number density for phi+ phi- -> Aprime -> Chi Chi
-long double CollisionNum_sschichi(long double T, long double mchi, long double mcs, long double kappa, long double TQCD) {
+//Number-density collision term for phi+ phi- -> Aprime -> Chi Chi
+long double CollisionNum_sschichi(long double T, long double mchi,
+                                  long double mcs, long double kappa,
+                                  long double TQCD) {
 
     if ( T <= TQCD ) {
 
         auto integrand_s = [=] (long double s) {
-            return M2_sschichi(s, mchi, mcs, kappa)*sqrt(1.0L - 4.0L*mchi*mchi/s)*sqrt(1.0L - 4.0L*mcs*mcs/s)*sqrt(s)*boost::math::cyl_bessel_k(1, sqrt(s)/T);
+            return M2_sschichi(s, mchi, mcs, kappa) *
+                   sqrt(1.0L - 4.0L*mchi*mchi/s) *
+                   sqrt(1.0L - 4.0L*mcs*mcs/s) *
+                   sqrt(s) *
+                   boost::math::cyl_bessel_k(1, sqrt(s)/T);
         };
         
-        return (4.0L*T/pow(4.0L*M_PI, 5.0L))*exp_sinh<long double>().integrate(integrand_s, std::max(4.0L*mcs*mcs, 4.0L*mchi*mchi), INFINITY);
+        return (4.0L*T/pow(4.0L*M_PI, 5.0L)) *
+               exp_sinh<long double>().integrate(integrand_s,
+                                            max(4.0L*mcs*mcs, 4.0L*mchi*mchi),
+                                            INFINITY);
     }
     else { return 0.0L; }
 }
 
-//Collision term for number density for W+ W- -> Aprime -> Chi Chi
-long double CollisionNum_WWchichi(long double T, long double mchi, long double kappa) {
+//Number-density collision term for W+ W- -> Aprime -> Chi Chi
+long double CollisionNum_WWchichi(long double T, long double mchi,
+                                  long double kappa) {
 
     auto integrand_s = [=] (long double s) {
-        return M2_WWchichi(s, mchi, kappa)*sqrt(1.0L - 4.0L*mchi*mchi/s)*sqrt(1.0L - 4.0L*MW*MW/s)*sqrt(s)*boost::math::cyl_bessel_k(1, sqrt(s)/T);
+        return M2_WWchichi(s, mchi, kappa) *
+               sqrt(1.0L - 4.0L*mchi*mchi/s) *
+               sqrt(1.0L - 4.0L*MW*MW/s) *
+               sqrt(s) *
+               boost::math::cyl_bessel_k(1, sqrt(s)/T);
     };
     
-    return (36.0L*T/pow(4.0L*M_PI, 5.0L))*exp_sinh<long double>().integrate(integrand_s, std::max(4.0L*MW*MW, 4.0L*mchi*mchi), INFINITY);
+    return (36.0L*T/pow(4.0L*M_PI, 5.0L)) *
+           exp_sinh<long double>().integrate(integrand_s,
+                                        max(4.0L*MW*MW, 4.0L*mchi*mchi),
+                                        INFINITY);
 }
 
-//Collision term for number density for portal freeze-in
-long double CollisionNum_chi(long double T, long double mchi, long double kappa, long double TQCD) {
+//Sum of all number-density collision terms for portal freeze-in
+long double CollisionNum_chi(long double T, long double mchi,
+                             long double kappa, long double TQCD) {
 
-    long double result =  CollisionNum_ffchichi(T, mchi, 0.0L, kappa, 1.0L, 0.0L, 0.5L, TQCD)*3.0L +//nu1, nu2, nu3
-                          CollisionNum_ffchichi(T, mchi, Me, kappa, 1.0L, -1.0L, -0.5L, TQCD) + //e
-                          CollisionNum_ffchichi(T, mchi, Mmu, kappa, 1.0L, -1.0L, -0.5L, TQCD) + //mu
-                          CollisionNum_ffchichi(T, mchi, Mta, kappa, 1.0L, -1.0L, -0.5L, TQCD) + //ta
-                          CollisionNum_ffchichi(T, mchi, Mu, kappa, 3.0L, 2.0L/3.0L, 0.5L, TQCD) + //u
-                          CollisionNum_ffchichi(T, mchi, Mc, kappa, 3.0L, 2.0L/3.0L, 0.5L, TQCD) + //c
-                          CollisionNum_ffchichi(T, mchi, Mt, kappa, 3.0L, 2.0L/3.0L, 0.5L, TQCD) + //t
-                          CollisionNum_ffchichi(T, mchi, Md, kappa, 3.0L, -1.0L/3.0L, -0.5L, TQCD) + //d
-                          CollisionNum_ffchichi(T, mchi, Ms, kappa, 3.0L, -1.0L/3.0L, -0.5L, TQCD) + //s
-                          CollisionNum_ffchichi(T, mchi, Mb, kappa, 3.0L, -1.0L/3.0L, -0.5L, TQCD) + //b
-                          CollisionNum_sschichi(T, mchi, Mpip, kappa, TQCD) + //pi+
-                          CollisionNum_sschichi(T, mchi, MKp, kappa, TQCD) + //K+
-                          CollisionNum_WWchichi(T, mchi, kappa); //W+
+    long double result = CollisionNum_ffchichi(T, mchi, 0.0L, kappa,
+                                          1.0L, 0.0L, 0.5L, TQCD)*3.0L + /*nu*/
+                    CollisionNum_ffchichi(T, mchi, Me, kappa,
+                                          1.0L, -1.0L, -0.5L, TQCD) + /*e*/
+                    CollisionNum_ffchichi(T, mchi, Mmu, kappa,
+                                          1.0L, -1.0L, -0.5L, TQCD) + /*mu*/
+                    CollisionNum_ffchichi(T, mchi, Mta, kappa,
+                                          1.0L, -1.0L, -0.5L, TQCD) + /*ta*/
+                    CollisionNum_ffchichi(T, mchi, Mu, kappa,
+                                          3.0L, 2.0L/3.0L, 0.5L, TQCD) + /*u*/
+                    CollisionNum_ffchichi(T, mchi, Mc, kappa,
+                                          3.0L, 2.0L/3.0L, 0.5L, TQCD) + /*c*/
+                    CollisionNum_ffchichi(T, mchi, Mt, kappa,
+                                          3.0L, 2.0L/3.0L, 0.5L, TQCD) + /*t*/
+                    CollisionNum_ffchichi(T, mchi, Md, kappa,
+                                          3.0L, -1.0L/3.0L, -0.5L, TQCD) + /*d*/
+                    CollisionNum_ffchichi(T, mchi, Ms, kappa,
+                                          3.0L, -1.0L/3.0L, -0.5L, TQCD) + /*s*/
+                    CollisionNum_ffchichi(T, mchi, Mb, kappa,
+                                          3.0L, -1.0L/3.0L, -0.5L, TQCD) + /*b*/
+                    CollisionNum_sschichi(T, mchi, Mpip, kappa, TQCD) + /*pi+*/
+                    CollisionNum_sschichi(T, mchi, MKp, kappa, TQCD) + /*K+*/
+                    CollisionNum_WWchichi(T, mchi, kappa); /*W*/
 
     return result;
 }
 
-/* Thermally averaged cross-sections for portal process */
+/****************************************/
+/* Equilibrium number density and Yield */
+/****************************************/
 
-long double SigmaV_chi(long double T, long double mchi, long double kappa, long double TQCD) {
-    
-    return CollisionNum_chi(T, mchi, kappa, TQCD)/pow(NumEq(T, mchi, 2), 2.0L);
-}
-
-/* Equilibrium number density */
+//Equilibrium number density for Chi
 long double NumEq(long double T, long double m, int dof) {
 
     return (dof/(2.0L*M_PI*M_PI))*T*m*m*boost::math::cyl_bessel_k(2, m/T);
@@ -385,29 +429,58 @@ long double NumEq(long double T, long double m, int dof) {
 //Equilibrium Yield for Chi
 long double YieldEq(long double T, long double mchi) {
 
-    return NumEq(T, mchi, 2)/sVisibleEntropy(T);
+    return NumEq(T, mchi, 2)/EntropyVisible(T);
 }
+
+/*********************************************************/
+/* Thermally-averaged cross-section for portal freeze-in */
+/*********************************************************/
+
+long double SigmaV_chi(long double T, long double mchi, long double kappa,
+                       long double TQCD) {
+    
+    return CollisionNum_chi(T, mchi, kappa, TQCD)/pow(NumEq(T, mchi, 2), 2.0L);
+}
+
+/*****************************/
+/* Freeze-in portal coupling */
+/*****************************/
 
 //Portal Yield for Chi
-long double Yield_FreezeIn(long double mchi, long double kappa, long double TQCD) {
+long double Yield_FreezeIn(long double mchi, long double kappa,
+                           long double TQCD) {
 
-    auto integrand_T = [=] (long double T) {return HoverHbar(T)*CollisionNum_chi(T, mchi, kappa, TQCD)/(gstarS(T)*sqrt(gstar(T))*pow(T, 6.0L));};
-    return (135.0L*sqrt(10.0L)*MPl/(2.0L*pow(M_PI, 3.0L)))*gauss<long double, 701>().integrate(integrand_T, 0.0L, INFINITY);
+    auto integrand_T = [=] (long double T) {
+        return HoverHbar(T) *
+               CollisionNum_chi(T, mchi, kappa, TQCD) /
+               (gstarS(T)*sqrt(gstar(T))*pow(T, 6.0L));
+    };
+    return (135.0L*sqrt(10.0L)*MPl/(2.0L*pow(M_PI, 3.0L))) *
+           gauss<long double, 701>().integrate(integrand_T, 0.0L, INFINITY);
 }
 
-//Kappa for freezing-in the required relic abundance
+//Portal coupling, kappa, for freezing-in the required relic abundance
 long double kappa_FreezeIn(long double mchi, long double TQCD) {
-    return sqrt(4.37e-10L/(2.0L*mchi*Yield_FreezeIn(mchi, 1.0L, TQCD)));
+    return sqrt(
+                4.37e-10L /
+                (2.0L * mchi * Yield_FreezeIn(mchi, 1.0L, TQCD))
+               );
 }
+
+/**********************************/
+/* Direct detection cross section */
+/**********************************/
 
 //Reduced mass of Chi and electron
-long double MuChie(long double mchi) {
+long double Muchie(long double mchi) {
     return mchi*Me/(mchi + Me);
 }
 
-//Direct detection cross section
+//Direct detection cross section in squared-centimeter: \overline{\sigma}_e
 long double SigmaDDe(long double mchi, long double kappa) {
-    return 16*M_PI*alphaEM*alphaEM**kappa*kappa*mu_chie(mchi)**2*GeVinvtocm**2/(alphaEM*me)**4;
+    return 16.0L*M_PI*alphaEM*alphaEM*kappa*kappa *
+           pow(Muchie(mchi), 2.0L) * pow(GeVinvtocm, 2.0L) /
+           pow((alphaEM * Me), 4.0L);
 }
 
 #endif
