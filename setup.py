@@ -1,26 +1,33 @@
-#To build:
-# >>> python setup.py --quiet build_ext --inplace clean --all
+#This program compiles the Freeze-in code and creates a python package
+#To manually build: python setup.py --quiet build_ext --inplace clean --all
+
+######################
+# Standard Libraries #
+######################
 
 import os
 import sys
-from glob import glob
-import setuptools
-from setuptools import setup
+from setuptools import setup, find_packages
+
+##################
+# Pybind Library #
+##################
 
 DIR = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(os.path.join(DIR, "extern", "pybind11"))
-
 from pybind11.setup_helpers import Pybind11Extension, build_ext
-
 del sys.path[-1]
 
-with open("README.md", "r") as README:
-    long_description = README.read()
+###################################
+# Compiling Freeze-in C++ Library #
+###################################
 
 FreezeIn = Pybind11Extension(
-    'FreezeIn',
-    sources=['src/FreezeInPy.cc'],
+    #Generate FreezeIn.*.so file in FreezeIn inside the src folder 
+    'FreezeIn.FreezeIn',
+    sources=['src/FreezeIn/FreezeInPy.cc'],
     language = 'c++',
+    define_macros=[('GSTARPATH', '"' + DIR + '"')],
     include_dirs = [
         os.path.join(DIR, 'extern'),
         os.path.join(DIR, 'extern', 'pybind11', 'include')
@@ -30,6 +37,13 @@ FreezeIn = Pybind11Extension(
         '-std=c++14'
     ]
 )
+
+####################################
+# Creating FreezeIn Python Library #
+####################################
+
+with open("README.md", "r") as README:
+    long_description = README.read()
 
 setup(
     name="FreezeIn",
@@ -44,7 +58,7 @@ setup(
     long_description_content_type="text/markdown",
     license="MIT",
     url="https://github.com/prudhvibhattiprolu/FreezeIn",
-    packages=setuptools.find_packages(where="src"),
+    packages=find_packages(where="src"),
     package_dir={"": "src"},
     classifiers=[
         "Programming Language :: Python :: 3",

@@ -12,14 +12,13 @@
 #include <string>/*to use string data type*/
 #include <cmath>/*provides pow, sqrt, ...*/
 #include <vector>/*provides std::vector*/
-#include <unistd.h>/*provides getcwd*/
 
 //Boost C++ library
 #include <boost/math/special_functions/bessel.hpp>/*provides bessel-K function*/
 #include <boost/math/quadrature/gauss.hpp>/*provides Gauss-Legendre quadrature*/
 #include <boost/math/quadrature/exp_sinh.hpp>/*provides exp_sinh quadrature*/
 
-//C++ namespaces
+//Namespaces
 using namespace std;
 using namespace boost::math;
 using namespace boost::math::quadrature;
@@ -261,7 +260,7 @@ long double HubbleVisible(long double T) {
 }
 
 //(H / Hbar) to account for varying gstarS only in the Visible sector
-long double HoverHbar(long double T) {
+long double HoverHbarVisible(long double T) {
     return (1.0L + (1.0L/3.0L)*dlngstarSdlnT(T));
 }
 
@@ -427,7 +426,7 @@ long double NumEq(long double T, long double m, int dof) {
 }
 
 //Equilibrium Yield for Chi
-long double YieldEq(long double T, long double mchi) {
+long double YieldEqVisible(long double T, long double mchi) {
 
     return NumEq(T, mchi, 2)/EntropyVisible(T);
 }
@@ -451,7 +450,7 @@ long double Yield_FreezeIn(long double mchi, long double kappa,
                            long double TQCD) {
 
     auto integrand_T = [=] (long double T) {
-        return HoverHbar(T) *
+        return HoverHbarVisible(T) *
                CollisionNum_chi(T, mchi, kappa, TQCD) /
                (gstarS(T)*sqrt(gstar(T))*pow(T, 6.0L));
     };
