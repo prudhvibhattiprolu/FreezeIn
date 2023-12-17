@@ -11,7 +11,7 @@ The freeze-in model is a benchmark for ongoing direct detection experiments. In 
 The data for the freeze-in kappa, $\kappa_\text{FI}$, as a function of $m_\chi$ in GeV, is included in this repository in the file [`KappaFI.txt`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/KappaFI.txt). This data was generated using the standard Gondolo-Gelmini $g_{\ast(, s)} (T)$ located at [`gstar/std.tab`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/gstar/std.tab). Furthermore, we have set the QCD scale $\Lambda_\text{QCD}$ to 0.15 GeV for these calculations.
 
 
-[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/KappaFI.pdf">](KappaFI.pdf)
+[<img src="https://www.dropbox.com/scl/fi/ihroqtsl3c0zxxzkpizcp/KappaFI.pdf?rlkey=6glyxxowcvt92794c6bv1cwv0&dl=0">](KappaFI.pdf)
 
 The shaded band corresponds to variation of $\Lambda_\text{QCD} = 0.15 \pm 0.05$ GeV.
 
@@ -82,7 +82,7 @@ computes the portal coupling, kappa, that reproduces the observed dark matter re
 In addition to the above function, there are several other functions, e.g,
 
 `SigmaV_chi(T, mchi, kappa, LambdaQCD=0.15)`:
-computes the thermally-averaged cross section for $\text{SM} \; \overline{\text{SM}} \rightarrow \chi \overline{\chi}$ process as a function of the temperature in the visible sector `T` in GeV, the dark matter mass `mchi` in GeV, and the portal coupling `kappa`. The QCD scale `LambdaQCD` is set to 0.15 GeV by default.
+computes the thermally-averaged cross section for $\text{SM} \ \overline{\text{SM}} \rightarrow \chi \overline{\chi}$ process as a function of the temperature in the visible sector `T` in GeV, the dark matter mass `mchi` in GeV, and the portal coupling `kappa`. The QCD scale `LambdaQCD` is set to 0.15 GeV by default.
 
 `RhoVisible(T)`:
 computes the energy density in the visible sector as a function of the temperature `T` in GeV
@@ -104,7 +104,7 @@ computes the derivative of log(gstarS) with respect to log(T) as a function of t
 
 All the above functions use the standard Gondolo-Gelmini $g_{\ast(,s)}(T)$ by default. To use other choices, evaluate the following function:
 
-`Read_gstar(choice, gstarpath="<path to FreezeIn repository>/gstar")`:
+`Read_gstar(choice="standard", gstarpath="<path to FreezeIn repository>/gstar")`:
 Reads tabulated data for effective number of degrees of freedom from various .tab files in the `gstar/` folder with three columns: {Temperature in GeV, gstarS, gstar}. The `gstarpath` parameter is by default set to the path to the `gstar/` folder provided with this repository. The `choice` parameter can be set to one of the following:
 
 * "standard": Gondolo-Gelmini (default)
