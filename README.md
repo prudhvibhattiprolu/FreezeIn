@@ -10,8 +10,7 @@ The freeze-in model is a benchmark for ongoing direct detection experiments. In 
 
 The data for the freeze-in kappa, $\kappa_\text{FI}$, as a function of $m_\chi$ in GeV, is included in this repository in the file [`KappaFI.txt`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/KappaFI.txt). This data was generated using the standard Gondolo-Gelmini $g_{\ast(, s)} (T)$ located at [`gstar/std.tab`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/gstar/std.tab). Furthermore, we have set the QCD scale $\Lambda_\text{QCD}$ to 0.15 GeV for these calculations.
 
-
-[<img src="https://www.dropbox.com/scl/fi/ihroqtsl3c0zxxzkpizcp/KappaFI.pdf?rlkey=6glyxxowcvt92794c6bv1cwv0&dl=0">](KappaFI.pdf)
+[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/KappaFI.png">](KappaFI.png)
 
 The shaded band corresponds to variation of $\Lambda_\text{QCD} = 0.15 \pm 0.05$ GeV.
 
