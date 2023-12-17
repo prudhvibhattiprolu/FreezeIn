@@ -50,10 +50,9 @@ setup(
     version="1.0",
     author="Prudhvi Bhattiprolu",
     author_email="prudhvibhattiprolu@gmail.com",
-    description="Computes the direct detection cross section or equivalently\
-            the portal couplings that reproduce the observed relic abundance,\
-            as a function of its mass, for dark matter frozen-in via a light\
-            dark photon mediator",
+    description="Computes the portal coupling that reproduces the observed\
+            dark matter relic abundance as a function of its mass, for dark\
+            matter frozen-in via a light dark photon mediator",
     long_description=long_description,
     long_description_content_type="text/markdown",
     license="MIT",
