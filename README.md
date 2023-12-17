@@ -8,16 +8,16 @@ The freeze-in model is a benchmark for ongoing direct detection experiments. In 
 
 ## Data
 
-The data for the freeze-in kappa, $\kappa_\text{FI}$, as a function of $m_\chi$ in GeV, is included in this repository in the file [`KappaFI.txt`](https://github.com/prudhvibhattiprolu/FreezeIn/KappaFI.txt). This data was generated using the standard Gondolo-Gelmini $g_{\ast(, s)} (T)$ located at [`gstar/std.tab`](https://github.com/prudhvibhattiprolu/FreezeIn/gstar/std.tab). Furthermore, we have set the QCD scale $\Lambda_\text{QCD}$ to 0.15 GeV for these calculations.
+The data for the freeze-in kappa, $\kappa_\text{FI}$, as a function of $m_\chi$ in GeV, is included in this repository in the file [`KappaFI.txt`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/KappaFI.txt). This data was generated using the standard Gondolo-Gelmini $g_{\ast(, s)} (T)$ located at [`gstar/std.tab`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/gstar/std.tab). Furthermore, we have set the QCD scale $\Lambda_\text{QCD}$ to 0.15 GeV for these calculations.
 
 
-[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/KappaFI.pdf">](KappaFI.pdf)
+[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/KappaFI.pdf">](KappaFI.pdf)
 
 The shaded band corresponds to variation of $\Lambda_\text{QCD} = 0.15 \pm 0.05$ GeV.
 
 ## Code
 
-The source code for this package, written in C++, is located at [`src/FreezeIn/FreezeIn.h`](https://github.com/prudhvibhattiprolu/FreezeIn/src/FreezeIn/FreezeIn.h). The program located at [`src/FreezeIn/FreezeInPy.cc`](https://github.com/prudhvibhattiprolu/FreezeIn/src/FreezeIn/FreezeInPy.cc) exposes the functions in the FreezeIn.h library to python using a light-weight header-only [pybind11](https://pybind11.readthedocs.io/en/stable/) library.
+The source code for this package, written in C++, is located at [`src/FreezeIn/FreezeIn.h`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/src/FreezeIn/FreezeIn.h). The program located at [`src/FreezeIn/FreezeInPy.cc`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/src/FreezeIn/FreezeInPy.cc) exposes the functions in the FreezeIn.h library to python using a light-weight header-only [pybind11](https://pybind11.readthedocs.io/en/stable/) library.
 
 The installation requires Python3 (> 3.7) and a C++ compiler (e.g. gcc). Additional C++ headers from [boost](https://www.boost.org/) and [pybind11](https://pybind11.readthedocs.io/en/stable/) required for the installation are already included in this package (located at `extern/boost` and `extern/pybind11`), and need not be installed seperately.
 
