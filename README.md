@@ -2,7 +2,7 @@
 
 ### Prudhvi N. Bhattiprolu, Robert McGehee, and Aaron Pierce
 
-This package computes the portal coupling $\kappa$ (using notation from Ref. [1]) that reproduces the observed relic abundance, and the corresponding direct detection cross section $\overline \sigma_e$, for dark matter, frozen-in via a light dark photon mediator, as a function of its mass $m_\chi$.
+This package computes the portal coupling $\kappa$ (using notation from Ref. [1]) that reproduces the observed relic abundance for dark matter, frozen-in via a light dark photon mediator, as a function of its mass $m_\chi$. It also gives, and the corresponding direct detection cross section off electrons $\overline \sigma_e$,
 
 The freeze-in model is a benchmark for ongoing direct detection experiments. In some cases, the literature for this benchmark has contained errors. Ref. [1] provides the corrected predictions and the corresponding code is available in this repository.
 
