@@ -2,27 +2,17 @@
 
 ### Prudhvi N. Bhattiprolu, Robert McGehee, and Aaron Pierce
 
-This package computes the portal coupling $\kappa$ (using notation from Ref. [1]) that reproduces the observed relic abundance
-and the corresponding direct detection cross section
-$\overline{\sigma}_e$
-for dark matter, frozen-in via a light dark photon mediator, as a function of its mass
-$m_\chi$.
+This package computes the portal coupling $\kappa$ (using notation from Ref. [1]) that reproduces the observed relic abundance and the corresponding direct detection cross section $\overline \sigma_e$, for dark matter, frozen-in via a light dark photon mediator, as a function of its mass $m_\chi$.
 
 The freeze-in model is a benchmark for ongoing direct detection experiments. In some cases, the literature for this benchmark has contained errors. Ref. [1] provides the corrected predictions and the corresponding code is available in this repository.
 
 ## Data
 
-The data for the freeze-in
-$\kappa$
-and the corresponding
-$\overline{\sigma}_e$
-as a function of
-$m_\chi$
-in GeV, is included in this repository in the file [`Data/FreezeIn.txt`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/FreezeIn.txt). This data was generated using the standard Gondolo-Gelmini $g_{\ast(, s)} (T)$ located at [`gstar/std.tab`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/gstar/std.tab). Furthermore, we have set the QCD scale $\Lambda_\text{QCD}$ to 0.15 GeV for these calculations.
+The data for the freeze-in $\kappa$ and the corresponding $\overline \sigma_e$ as a function of $m_\chi$ in GeV, is included in this repository in the file [`data/FreezeIn.txt`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/data/FreezeIn.txt). This data was generated using the standard Gondolo-Gelmini $g_{\ast(, s)} (T)$ located at [`gstar/std.tab`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/gstar/std.tab). Furthermore, we have set the QCD scale $\Lambda_\text{QCD}$ to 0.15 GeV for these calculations.
 
-[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/KappaFI.png">](Data/KappaFI.png)
+[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/data/KappaFI.png">](data/KappaFI.png)
 
-[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/SigmaDDeFI.png">](Data/SigmaDDeFI.png)
+[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/data/SigmaDDeFI.png">](data/SigmaDDeFI.png)
 
 The shaded band corresponds to variation of $\Lambda_\text{QCD} = 0.15 \pm 0.05$ GeV.
 
@@ -85,11 +75,7 @@ help(FreezeIn.kappa_FreezeIn)
 print(FreezeIn.kappa_FreezeIn.__doc__)
 ```
 
-We can now compute the freeze-in
-$\kappa$
-and the corresponding
-$\overline{\sigma}_e$
-using the following functions:
+We can now compute the freeze-in $\kappa$ and the corresponding $\overline \sigma_e$ using the following functions:
 
 `kappa_FreezeIn(mchi, LambdaQCD=0.15)`:
 computes the portal coupling, kappa, that reproduces the observed dark matter relic abundance for dark matter frozen-in via a light dark photon mediator as a function of the dark matter mass `mchi` in GeV. The QCD scale `LambdaQCD`, set to 0.15 GeV by default, can also be changed
