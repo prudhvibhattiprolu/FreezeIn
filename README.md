@@ -8,11 +8,11 @@ The freeze-in model is a benchmark for ongoing direct detection experiments. In 
 
 ## Data
 
-The data for the freeze-in $\kappa$ and the corresponding $\overline \sigma_e$ as a function of $m_\chi$ in GeV, is included in this repository in the file [`data/FreezeIn.txt`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/data/FreezeIn.txt). This data was generated using the standard Gondolo-Gelmini $g_{\ast(, s)} (T)$ located at [`gstar/std.tab`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/gstar/std.tab). Furthermore, we have set the QCD scale $\Lambda_\text{QCD}$ to 0.15 GeV for these calculations.
+The data for the freeze-in $\kappa$ and the corresponding $\overline \sigma_e$ as a function of $m_\chi$ in GeV, is included in this repository in the file [`Data/FreezeIn.txt`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/FreezeIn.txt). This data was generated using the standard Gondolo-Gelmini $g_{\ast(, s)} (T)$ located at [`gstar/std.tab`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/gstar/std.tab). Furthermore, we have set the QCD scale $\Lambda_\text{QCD}$ to 0.15 GeV for these calculations.
 
-[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/data/KappaFI.png">](data/KappaFI.png)
+[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/KappaFI.png">](Data/KappaFI.png)
 
-[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/data/SigmaDDeFI.png">](data/SigmaDDeFI.png)
+[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/SigmaDDeFI.png">](Data/SigmaDDeFI.png)
 
 The shaded band corresponds to variation of $\Lambda_\text{QCD} = 0.15 \pm 0.05$ GeV.
 
