@@ -236,8 +236,8 @@ long double EntropyVisible(long double T) {
     return (2.0L*M_PI*M_PI/45.0L)*gstarS(T)*T*T*T;
 }
 
-//Hubble rate in the Visible sector
-long double HubbleVisible(long double T) {
+//Hubble rate
+long double Hubble(long double T) {
     return sqrt(M_PI*M_PI*gstar(T)/90.0L)*T*T/MPl;
 }
 
@@ -450,6 +450,22 @@ long double kappa_FreezeIn(long double mchi, long double LambdaQCD) {
                 4.37e-10L /
                 (2.0L * mchi * Yield_FreezeIn(mchi, 1.0L, LambdaQCD))
                );
+}
+
+/**********************************/
+/* Direct detection cross section */
+/**********************************/
+
+//Reduced mass of Chi and electron
+long double Muchie(long double mchi) {
+    return mchi*Me/(mchi + Me);
+}
+
+//Direct detection cross section in squared-centimeter: \overline{\sigma}_e
+long double SigmaDDe(long double mchi, long double kappa) {
+    return 16.0L*M_PI*alphaEM*alphaEM*kappa*kappa *
+           pow(Muchie(mchi), 2.0L) * pow(GeVinvtocm, 2.0L) /
+           pow((alphaEM * Me), 4.0L);
 }
 
 #endif

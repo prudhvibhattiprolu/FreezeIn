@@ -122,8 +122,8 @@ PYBIND11_MODULE(FreezeIn, mod)
     Comoving entropy in the visible sector
     )pbdoc", py::arg("T"));
 
-    //HubbleVisible(T)
-    mod.def("HubbleVisible", &HubbleVisible, R"pbdoc(
+    //Hubble(T)
+    mod.def("Hubble", &Hubble, R"pbdoc(
     Inputs
     ------
 
@@ -132,7 +132,7 @@ PYBIND11_MODULE(FreezeIn, mod)
     Returns
     -------
 
-    Hubble rate in the visible sector
+    Hubble rate
     )pbdoc", py::arg("T"));
 
     //SigmaV_chi(T, mchi, kappa, LambdaQCD)
@@ -166,5 +166,21 @@ PYBIND11_MODULE(FreezeIn, mod)
     Portal coupling kappa that reproduces the observed dark matter relic
     abundance for dark matter frozen-in via a light dark photon mediator
     )pbdoc", py::arg("mchi"), py::arg("LambdaQCD")=0.15);
+
+    //SigmaDDe(mchi, kappa)
+    mod.def("SigmaDDe", &SigmaDDe, R"pbdoc(
+    Inputs
+    ------
+
+    mchi: mass of the dark matter in GeV
+    kappa: portal coupling
+
+    Returns
+    -------
+
+    Direct detection cross section (in cm^2) through the light dark photon
+    mediator
+    )pbdoc", py::arg("mchi"), py::arg("kappa"));
+
     
 };
