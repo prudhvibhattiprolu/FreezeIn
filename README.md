@@ -127,4 +127,4 @@ If you want to use your own .tab file for gstar(S), you can include it in the `g
 
 ## References
 
-[1] P. N. Bhattiprolu, R. McGehee, A. Pierce, “Freeze-in Dark Matter with a Dark Sink,” arXiv: 2312.***** [hep-ph].
+[1] P. N. Bhattiprolu, R. McGehee, A. Pierce, “A Dark Sink Enhances the Direct Detection of Freeze-in Dark Matter,” arXiv: 2312.14152 [hep-ph].
