@@ -33,8 +33,8 @@ FreezeIn = Pybind11Extension(
         os.path.join(DIR, 'extern', 'pybind11', 'include')
     ],
     extra_compile_args = [
-        #"-H",
-        '-std=c++14'
+        "-H",
+        #'-std=c++14'
     ]
 )
 
@@ -47,7 +47,7 @@ with open("README.md", "r") as README:
 
 setup(
     name="FreezeIn",
-    version="1.0",
+    version="2.0",
     author="Prudhvi Bhattiprolu",
     author_email="prudhvibhattiprolu@gmail.com",
     description="Computes the portal coupling that reproduces the observed\
