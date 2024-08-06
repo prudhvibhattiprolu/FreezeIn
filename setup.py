@@ -33,10 +33,12 @@ FreezeIn = Pybind11Extension(
         os.path.join(DIR, 'extern', 'pybind11', 'include')
     ],
     extra_compile_args = [
-        "-H",
-        #'-std=c++14'
+        #"-H",
+        '-std=c++14'
     ]
 )
+
+print(DIR);
 
 ####################################
 # Creating FreezeIn Python Library #
