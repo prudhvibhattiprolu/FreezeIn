@@ -18,7 +18,7 @@ The shaded band corresponds to variation of $\Lambda_\text{QCD} = 0.15 \pm 0.05$
 
 For sub-MeV dark matter masses, plasmons quickly become the dominant source of freezing-in dark matter.
 
-[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/SigmaDDeFI.png">](Data/SubMeVFI.png)
+[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/SubMeVFI.png">](Data/SubMeVFI.png)
 
 The dot-dashed curve corresponds to the freeze-in line neglecting the effect of plasmons.
 
@@ -139,7 +139,7 @@ Plasma frequency (typical plasmon mass) in GeV as a function of the temperature 
 `vstar(T)`:
 Typical electron velocity in the plasma as a function of the temperature `T` in GeV
 
-[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/SigmaDDeFI.png">](Data/PlasmonProperties.png)
+[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/PlasmonProperties.png">](Data/PlasmonProperties.png)
 
 `PlasmonMasst(k, T)`:
 Transverse plasmon mass in GeV as a function of the wavevector `k` in GeV and the temperature `T` in GeV
@@ -147,7 +147,7 @@ Transverse plasmon mass in GeV as a function of the wavevector `k` in GeV and th
 `PlasmonZt(k, T)`:
 Transverse plasmon renormalization factor as a function of the wavevector `k` in GeV and the temperature `T` in GeV
 
-[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/SigmaDDeFI.png">](Data/TransversePlasmon.png)
+[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/TransversePlasmon.png">](Data/TransversePlasmon.png)
 
 `PlasmonMassl(k, T)`:
 Longitudinal plasmon mass in GeV as a function of the wavevector `k` in GeV and the temperature `T` in GeV
@@ -155,7 +155,7 @@ Longitudinal plasmon mass in GeV as a function of the wavevector `k` in GeV and 
 `PlasmonZl(k, T)`:
 Longitudinal plasmon renormalization factor as a function of the wavevector `k` in GeV and the temperature `T` in GeV
 
-[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/SigmaDDeFI.png">](Data/LongitudinalPlasmon.png)
+[<img src="https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/Data/LongitudinalPlasmon.png">](Data/LongitudinalPlasmon.png)
 
 For faster evaluations of the plasmon properties mentioned above, the functions `Omegap(T)`, `vstar(T)`(, and `Omega1(T)`) are retrieved from the look-up table `gstar/OmegaInterpolation.tab` using 1D interpolation, with the default evaluation of the following function:
 
