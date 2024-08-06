@@ -59,20 +59,9 @@ setup(
     url="https://github.com/prudhvibhattiprolu/FreezeIn",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    data_files=[
-        (
-            'FreezeIn/gstar',
-            [
-                'gstar/std.tab',
-                'gstar/HP_A.tab',
-                'gstar/HP_B.tab',
-                'gstar/HP_B2.tab',
-                'gstar/HP_B3.tab',
-                'gstar/HP_C.tab',
-                'gstar/OmegaInterpolation.tab'
-            ]
-        )
-    ],
+    package_data={
+        'FreezeIn': ['gstar/*.tab']
+    },
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
