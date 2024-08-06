@@ -7,7 +7,6 @@
 
 import os
 import sys
-import glob
 from setuptools import setup, find_packages
 
 ##################
@@ -39,9 +38,6 @@ FreezeIn = Pybind11Extension(
     ]
 )
 
-# Find all .tab files in the gstar directory
-gstar_files = glob.glob(os.path.join(DIR, 'gstar', '*.tab'))
-
 ####################################
 # Creating FreezeIn Python Library #
 ####################################
@@ -64,7 +60,18 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     data_files=[
-        ('FreezeIn/gstar', gstar_files)
+        (
+            'FreezeIn/gstar',
+            [
+                'gstar/std.tab',
+                'gstar/HP_A.tab',
+                'gstar/HP_B.tab',
+                'gstar/HP_B2.tab',
+                'gstar/HP_B3.tab',
+                'gstar/HP_C.tab',
+                'gstar/OmegaInterpolation.tab'
+            ]
+        )
     ],
     include_package_data=True,
     classifiers=[
