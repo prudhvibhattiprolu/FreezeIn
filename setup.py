@@ -33,7 +33,7 @@ FreezeIn = Pybind11Extension(
         os.path.join(DIR, 'extern', 'pybind11', 'include')
     ],
     extra_compile_args = [
-        #"-H",
+        "-H",
         #'-std=c++14'
     ]
 )
@@ -59,10 +59,10 @@ setup(
     url="https://github.com/prudhvibhattiprolu/FreezeIn",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    #package_data={
-    #    'FreezeIn': ['gstar/*.tab']
-    #},
-    setup_requires=['setuptools_scm'],
+    package_data={
+        '': ['gstar/*.tab']
+    },
+    #setup_requires=['setuptools_scm'],
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
