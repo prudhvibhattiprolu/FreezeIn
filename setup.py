@@ -14,7 +14,7 @@ from setuptools import setup, find_packages
 ##################
 
 DIR = os.path.abspath(os.path.dirname(__file__))
-sys.path.append(os.path.join(DIR, "extern", "pybind11"))
+sys.path.append(os.path.join(DIR, "extern", "pybind"))
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 del sys.path[-1]
 
@@ -30,7 +30,7 @@ FreezeIn = Pybind11Extension(
     define_macros=[('GSTARPATH', '"' + DIR + '"')],
     include_dirs = [
         os.path.join(DIR, 'extern'),
-        os.path.join(DIR, 'extern', 'pybind11', 'include')
+        os.path.join(DIR, 'extern', 'pybind', 'include')
     ],
     extra_compile_args = [
 #        "-H",
