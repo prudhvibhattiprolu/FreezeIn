@@ -7,11 +7,16 @@
 
 import os
 import sys
+import platform
 from setuptools import setup, find_packages
 
 ##################
 # Pybind Library #
 ##################
+
+# Set MACOSX_DEPLOYMENT_TARGET only if we are on macOS
+if platform.system() == 'Darwin':
+    os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.15'
 
 DIR = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(os.path.join(DIR, "extern", "pybind"))
