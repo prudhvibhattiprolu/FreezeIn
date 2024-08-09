@@ -178,6 +178,8 @@ For faster evaluation of the plasmon properties mentioned above, the functions `
 `Read_OmegasFile(gstarpath="<path to FreezeIn repository>/gstar")`:
 Read tabulated data for {Omega1, Omegap, vstar} as a function of temperature from `gstar/OmegaInterpolation.tab`. The `gstarpath` parameter is by default set to the path to the `gstar/` folder provided with this repository.
 
+Note: We neglect the finite electron chemical potential since this is only relevant for $m_\chi \lesssim \mathcal{O}(10 \text{ keV})$, which is ruled out.
+
 ## References
 
 [1] P. N. Bhattiprolu, R. McGehee, A. Pierce, “A Dark Sink Enhances the Direct Detection of Freeze-in Dark Matter,” arXiv: 2312.14152 [hep-ph].
