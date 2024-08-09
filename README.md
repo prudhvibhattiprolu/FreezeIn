@@ -26,9 +26,9 @@ The dot-dashed curve corresponds to the freeze-in line neglecting the effect of 
 
 The source code for this package, written in C++, is located at [`src/FreezeIn/FreezeIn.h`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/src/FreezeIn/FreezeIn.h). The program located at [`src/FreezeIn/FreezeInPy.cc`](https://github.com/prudhvibhattiprolu/FreezeIn/blob/main/src/FreezeIn/FreezeInPy.cc) exposes the functions in the FreezeIn.h library to python using a light-weight header-only [pybind11](https://pybind11.readthedocs.io/en/stable/) library.
 
-The installation requires Python3 (> 3.7) and a C++ compiler (e.g. gcc). Additional C++ headers from [boost](https://www.boost.org/) and [pybind11](https://pybind11.readthedocs.io/en/stable/) required for the installation are already included in this package (located at `extern/boost` and `extern/pybind11`), and need not be installed seperately.
+The installation requires Python3 (> 3.7) and a C++ compiler (e.g. gcc) with standard C++ header files. Additional C++ headers from [boost](https://www.boost.org/) and [pybind11](https://pybind11.readthedocs.io/en/stable/) required for the installation are already included in this package (located at `extern/boost` and `extern/pybind`), and need not be installed seperately.
 
-### Automatic Installation
+<!--### Automatic Installation
 
 To automatically install FreezeIn as a python package using pip, run
 
@@ -56,7 +56,23 @@ Finally, to build the package:
 python setup.py --quiet build_ext --inplace clean --all
 ```
 
-If the installation is successful, a shared object file should appear at `src/FreezeIn/FreezeIn.*.so`. To start using the package in python, `cd src/` and launch python to import `FreezeIn` as a package.
+If the installation is successful, a shared object file should appear at `src/FreezeIn/FreezeIn.*.so`. To start using the package in python, `cd src/` and launch python to import `FreezeIn` as a package.-->
+
+### Installation
+
+To install FreezeIn as a python package using pip, execute the following series of commands:
+
+```bash
+git clone https://github.com/prudhvibhattiprolu/FreezeIn.git # Clone FreezeIn
+cd FreezeIn # Navigate into the package directory
+python setup.py sdist bdist_wheel # Create a source distribution and wheel
+pip install dist/FreezeIn*whl # Install the package
+cd .. # Navigate back to previous directory
+```
+
+After running these commands, the package can be readily imported (from any directory) in your Python environment.
+
+If you want to build the FreezeIn package into your own code or if the automatic installation is unsuccessful, you can manually clone the repository, edit the source code, and install the package using the same series of commands mentioned above.
 
 ### Usage
 
@@ -72,7 +88,7 @@ All the functions (along with the documentation) can be listed by using the Pyth
 help(FreezeIn)
 ```
 
-The documentation for each function can be accessed by doing
+The documentation for individual functions can also be accessed.
 
 ```python
 # To access the documentation of the function kappa_FreezeIn, e.g., we can either do
@@ -81,7 +97,7 @@ help(FreezeIn.kappa_FreezeIn)
 print(FreezeIn.kappa_FreezeIn.__doc__)
 ```
 
-We can now compute the freeze-in $\kappa$ and the corresponding $\overline \sigma_e$ using the following functions:
+We can now compute the freeze-in $\kappa$ and the corresponding $\overline \sigma_e$ using the following functions, which can be accessed via `FreezeIn.<function>(<parameters>)`:
 
 `kappa_FreezeIn(mchi, LambdaQCD=0.15, IncludePlasmons=True)`:
 computes the portal coupling, `kappa`, that reproduces the observed dark matter relic abundance for dark matter frozen-in via a light dark photon mediator as a function of the dark matter mass `mchi` in GeV. The QCD scale `LambdaQCD`, set to 0.15 GeV by default, can also be changed. Plasmon decay effects are included by default but can be excluded by setting `IncludePlasmons` to `False`.
