@@ -182,9 +182,9 @@ Note: We neglect the finite electron chemical potential since this is only relev
 
 ## References
 
-[1] P. N. Bhattiprolu, R. McGehee, A. Pierce, “A Dark Sink Enhances the Direct Detection of Freeze-in Dark Matter,” arXiv: 2312.14152 [hep-ph].
+[1] P. N. Bhattiprolu, R. McGehee, A. Pierce, “A Dark Sink Enhances the Direct Detection of Freeze-in Dark Matter,” arXiv: [2312.14152](https://arxiv.org/abs/2312.14152) [hep-ph].
 
-[2] P. N. Bhattiprolu, R. McGehee, E. Petrosky, A. Pierce, “Sub-MeV Dark Sink Dark Matter,” arXiv: 2408.***** [hep-ph].
+[2] P. N. Bhattiprolu, R. McGehee, E. Petrosky, A. Pierce, “Sub-MeV Dark Sink Dark Matter,” arXiv: [2408.07744](https://arxiv.org/abs/2408.07744) [hep-ph].
 
-[3] C. Dvorkin, T. Lin, K. Schutz, "Making dark matter out of light: freeze-in from plasma effects," arXiv: 1902.08623 [hep-ph]
+[3] C. Dvorkin, T. Lin, K. Schutz, "Making dark matter out of light: freeze-in from plasma effects," arXiv: [1902.08623](https://arxiv.org/abs/1902.08623) [hep-ph]
 
